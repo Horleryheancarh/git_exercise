@@ -1,0 +1,24 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+  - repo: https://github.com/pre-commit/mirrors-autopep8
+    rev: v2.0.4
+    hooks:
+      - id: autopep8
+        additional_dependencies: [autopep8]
+  - repo: local
+    hooks:
+      - id: check-branch-naming
+        name: Check branch naming convention
+        entry: scripts/check_branch_naming.sh
+        language: script
+        stages: [commit]
+      - id: check-commit-message
+        name: Check commit message convention
+        entry: '\A(?![A-Z]+-[0-9]+:+)'
+        language: pygrep
+        args: [--multiline]
+        stages: [commit-msg]
