@@ -15,11 +15,10 @@ repos:
         name: Check branch naming convention
         entry: scripts/check_branch_naming.sh
         language: script
-        files: '^refs/heads/(.*)$'
         stages: [commit]
       - id: check-commit-message
         name: Check commit message convention
-        entry: scripts/check_commit_message.sh
-        language: script
-        files: (?<!Merge\sbranch\s')[\s\S]+(?=\n\s*\n)
-        stages: [commit]
+        entry: '\A(?![A-Z]+-[0-9]+:+)'
+        language: pygrep
+        args: [--multiline]
+        stages: [commit-msg]
